@@ -21,9 +21,13 @@ suppliers and buyers means that contractors often struggle with last-minute proc
 chain disruptions, and price fluctuations. The need for an automated, digital procurement solution is 
 crucial to improving the efficiency and reliability of material sourcing in the construction sector.  
 • Purpose/Objectives and Goals  
-The primary goals of BuildSmart are:  - To develop an easy-to-use platform that allows construction companies and contractors to purchase 
-building materials online seamlessly.  - To enable real-time tracking of inventory, ensuring users have updated information on product 
-availability.  - To provide secure authentication and transaction mechanisms to safeguard user data and financial 
+The primary goals of BuildSmart are: 
+- To develop an easy-to-use platform that allows construction companies and contractors to purchase 
+building materials online seamlessly.
+- To enable real-time tracking of inventory, ensuring users have updated information on product 
+availability.
+ - To provide secure authentication and transaction mechanisms to safeguard user data and financial 
 transactions.  
 - To increase supply chain transparency by allowing direct communication between suppliers and buyers.  
-To facilitate bulk ordering and vendor management, reducing material procurement time and costs.  - To integrate with payment gateways for smooth and secure transactions.  
+To facilitate bulk ordering and vendor management, reducing material procurement time and costs.
+- To integrate with payment gateways for smooth and secure transactions.  
