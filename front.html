@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build Smart - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            background: url('buildsmart.jpeg') no-repeat center center/cover;
+            color: black;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 10%;
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+        .logo-container img {
+            width: 50px; /* Adjust size of logo */
+            height: auto;
+            margin-right: 10px;
+        }
+        .logo-text {
+            font-size: 30px;
+            font-weight: bold;
+        }
+        nav {
+            display: flex;
+            gap: 20px;
+        }
+        nav a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+        nav a:hover {
+            background: #ff7f50;
+        }
+
+        /* Hero Section */
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            padding: 0 10%;
+            position: relative;
+        }
+        h1 {
+            font-size: 50px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: white;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.6);
+            animation: fadeIn 2s ease-in-out;
+        }
+        p {
+            font-size: 20px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+            color: white;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 3s ease-in-out;
+        }
+        .buttons {
+            display: flex;
+            gap: 15px;
+            animation: fadeIn 4s ease-in-out;
+        }
+        .btn {
+            padding: 12px 24px;
+            font-size: 18px;
+            background: #ff7f50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .btn:hover {
+            background: #ff4500;
+            transform: scale(1.05);
+        }
+
+        /* Floating Features */
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            flex-wrap: wrap;
+        }
+        .feature-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            width: 200px;
+            transition: transform 0.3s;
+        }
+        .feature-box:hover {
+            transform: scale(1.1);
+        }
+        .feature-box i {
+            font-size: 30px;
+            margin-bottom: 10px;
+            color: white;
+        }
+        .feature-box h3 {
+            color: white;
+            font-size: 18px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 35px;
+            }
+            p {
+                font-size: 16px;
+            }
+            .buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <img src="logo.png" alt="Build Smart Logo"> <!-- Add your logo image here -->
+            <div class="logo-text">Build Smart</div>
+        </div>
+        <nav>
+            <a href="login.html">Login</a>
+            <a href="Sign Up.html">Sign Up</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Building Your Dream One Brick at a Time</h1>
+        <p>"Streamlining construction projects through a digital platform that connects builders, suppliers, and contractors to manage materials, costs, and logistics efficiently."</p>
+        <div class="buttons">
+            <button class="btn" onclick="window.location.href='learn.html'">Learn More</button>
+            <button class="btn" onclick="checkLogin()">Explore Products</button>
+
+<script>
+    function checkLogin() {
+        if (sessionStorage.getItem("loggedIn") === "true") {
+            window.location.href = "main1.html"; // Proceed if logged in
+        } else {
+            alert("You need to log in first!");
+            window.location.href = "login.html"; // Redirect to login page
+        }
+    }
+</script>
+
+        </div>
+    </div>
+
+    <!-- Floating Features -->
+    <div class="features">
+        <div class="feature-box">
+            <i class="fas fa-truck"></i>
+            <h3>Fast Delivery</h3>
+        </div>
+        <div class="feature-box">
+            <i class="fas fa-tools"></i>
+            <h3>Quality Materials</h3>
+        </div>
+        <div class="feature-box">
+            <i class="fas fa-handshake"></i>
+            <h3>Trusted Partners</h3>
+        </div>
+        <div class="feature-box">
+            <i class="fas fa-cogs"></i>
+            <h3>Advanced Logistics</h3>
+        </div>
+    </div>
+
+</body>
+</html>

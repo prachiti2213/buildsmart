@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildSmart - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Styling */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+
+        /* Header */
+        .header {
+            background: #fff;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header .logo {
+            display: flex;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #000;
+            cursor: pointer;
+        }
+
+        .header .logo i {
+            font-size: 24px;
+            margin-right: 8px;
+            color: #007bff;
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 20px;
+        }
+
+        .header-icons i {
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .header-icons i:hover {
+            color: #007bff;
+        }
+
+        .header-icons .cart {
+            position: relative;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 3px 7px;
+            font-size: 12px;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: #fff;
+            margin: 15px auto;
+            width: 80%;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-bar button {
+            padding: 10px 15px;
+            background: #007bff;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        /* Category Section */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px auto;
+            width: 80%;
+        }
+
+        .category {
+            background: #fff;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .category:hover {
+            transform: translateY(-3px);
+            background: #f1f1f1;
+        }
+
+        .category i {
+            font-size: 30px;
+            margin-bottom: 10px;
+            color: #007bff;
+        }
+
+        .category p {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        .footer {
+            background: #fff;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+            box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .social-icons {
+            margin-top: 10px;
+            font-size: 20px;
+        }
+
+        .social-icons i {
+            margin: 0 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .social-icons i:hover {
+            color: #007bff;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="logo" onclick="redirectToHome()">
+            <i class="fas fa-home"></i> BuildSmart
+        </div>
+        <div class="header-icons">
+            <i class="fas fa-user" onclick="alert('User profile clicked!')"></i>
+            <i class="fas fa-bell" onclick="alert('No new notifications!')"></i>
+            <div class="cart" onclick="goToCart()">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-badge" id="cart-count">0</span>
+            </div>
+            <i class="fas fa-search"></i>
+        </div>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="What are you looking for?">
+        <button onclick="searchItems()">Search</button>
+    </div>
+
+    <!-- Category Section -->
+    <div class="categories">
+        <div class="category" onclick="goToCategory('cement')">
+            <i class="fas fa-cube"></i>
+            <p>Cement</p>
+        </div>
+        <div class="category" onclick="goToCategory('bricks')">
+            <i class="fas fa-th-large"></i>
+            <p>Bricks</p>
+        </div>
+        <div class="category" onclick="goToCategory('steel')">
+            <i class="fas fa-align-left"></i>
+            <p>Steel</p>
+        </div>
+        <div class="category" onclick="goToCategory('aggregates')">
+            <i class="fas fa-boxes"></i>
+            <p>Aggregates</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="logo">
+            <i class="fas fa-home"></i> <b>BuildSmart</b>
+        </div>
+        <div class="social-icons">
+            <i class="fab fa-facebook" onclick="openSocial('facebook')"></i>
+            <i class="fab fa-instagram" onclick="openSocial('instagram')"></i>
+            <i class="fab fa-twitter" onclick="openSocial('twitter')"></i>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        function searchItems() {
+            let query = document.getElementById('search-input').value;
+            if (query) {
+                alert('Searching for: ' + query);
+                console.log('Search Query:', query);
+            } else {
+                alert('Please enter a search term!');
+            }
+        }
+
+        function goToCategory(category) {
+            window.location.href = category + ".html";
+        }
+
+        function goToCart() {
+            alert('Going to Cart Page!');
+        }
+
+        function openSocial(platform) {
+            let urls = {
+                facebook: 'https://facebook.com',
+                instagram: 'https://instagram.com',
+                twitter: 'https://twitter.com'
+            };
+            window.open(urls[platform], '_blank');
+        }
+
+        function redirectToHome() {
+            window.location.href = "index.html";
+        }
+    </script>
+
+</body>
+</html>

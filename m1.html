@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildSmart Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+
+        /* Welcome Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+            border-radius: 10px;
+            text-align: center;
+            z-index: 1000;
+        }
+        .popup button {
+            background: #ff7f50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        /* Header & Top Bar */
+        header {
+            background: #333;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background: #444;
+            color: white;
+        }
+        .top-bar input {
+            padding: 8px;
+            width: 40%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .top-bar button {
+            padding: 8px 12px;
+            background: #ff9800;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .top-bar button:hover {
+            background: #e68900;
+        }
+
+        /* Cart Icon */
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+        .cart-icon i {
+            font-size: 24px;
+        }
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: #555;
+        }
+        nav button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        nav button:hover {
+            background: #666;
+            border-radius: 5px;
+        }
+
+        /* Product Styling */
+        .container {
+            width: 90%;
+            margin: 20px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            width: 100%;
+        }
+        .product {
+            border: 1px solid #ccc;
+            background: white;
+            padding: 15px;
+            width: 250px;
+            text-align: center;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 10px;
+        }
+        .product:hover {
+            transform: scale(1.05);
+            box-shadow: 4px 4px 20px rgba(0,0,0,0.2);
+        }
+        .product img {
+            width: 100%;
+            height: 150px;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+        .product h4 {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+        .product p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .product .price {
+            font-size: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+        .product .discount {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        /* Buttons */
+        .add-to-cart, .buy-now {
+            padding: 8px;
+            margin: 5px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            width: 100%;
+            transition: background 0.3s;
+        }
+        .add-to-cart {
+            background: #28a745;
+        }
+        .buy-now {
+            background: #007bff;
+        }
+        .add-to-cart:hover {
+            background: #218838;
+        }
+        .buy-now:hover {
+            background: #0056b3;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        footer a {
+            color: #ff9800;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Carousel */
+        .carousel {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        .carousel img {
+            width: 100%;
+            display: none;
+        }
+        .carousel img.active {
+            display: block;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: #f1f1f1;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .filters select, .filters input {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Welcome Popup -->
+    <div id="welcomePopup" class="popup">
+        <h2>Welcome to BuildSmart!</h2>
+        <p>You have successfully logged in.</p>
+        <button onclick="closePopup()">OK</button>
+    </div> ]
+	 
+
+    <header>BuildSmart</header>
+    <div class="top-bar">
+        <span>Shipping to: Pune, 411030</span>
+        <input type="text" id="searchInput" placeholder="What are you looking for?">
+        <button id="searchBtn">Search</button>
+        <button>Services</button>
+        <button class="btn" onclick="logout()">Log Out</button>
+        <div class="cart-icon" onclick="viewCart()">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cartCount">0</span>
+        </div>
+    </div>
+    
+    <nav>
+        <button id="showCategories">Show all Categories</button>
+        <div id="categoryList" class="hidden">
+            <button class="btn" onclick="filterCategory('all')">All</button>
+            <button class="btn" onclick="filterCategory('cement')">Cement</button>
+            <button class="btn" onclick="filterCategory('bricks')">Bricks</button>
+            <button class="btn" onclick="filterCategory('steel')">Steel</button>
+            <button class="btn" onclick="filterCategory('aggregates')">Aggregates</button>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <!-- Carousel -->
+        <div class="carousel">
+            <img src="banner1.jpg" alt="Banner 1" class="active">
+            <img src="banner2.jpg" alt="Banner 2">
+            <img src="banner3.jpg" alt="Banner 3">
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <select id="categoryFilter">
+                <option value="all">All Categories</option>
+                <option value="cement">Cement</option>
+                <option value="bricks">Bricks</option>
+                <option value="steel">Steel</option>
+                <option value="aggregates">Aggregates</option>
+            </select>
+            <input type="number" id="minPrice" placeholder="Min Price">
+            <input type="number" id="maxPrice" placeholder="Max Price">
+            <button onclick="applyFilters()">Apply Filters</button>
+        </div>
+
+        <section class="product-list" id="productList">
+            <!-- Products will be dynamically populated here -->
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 BuildSmart. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+    </footer>
+
+    <script>
+    const products = [
+        { id: 1, name: "UltraTech Cement", category: "cement", price: 1000, image: "ultratech_cement.png", description: "Trusted Quality" },
+        { id: 2, name: "Mud Bricks", category: "bricks", price: 470, image: "bricks.png", description: "Size: 9in x 4in x 3in" },
+        { id: 3, name: "Steel Rods", category: "steel", price: 1200, image: "steel_rods.png", description: "High Strength" },
+        { id: 4, name: "Aggregates Material", category: "aggregates", price: 8000, image: "ag.png", description: "High Strength" },
+        { id: 5, name: "River Sand", category: "aggregates", price: 800, image: "rs.webp", description: "High Strength" },
+        { id: 6, name: "Concrete Blocks", category: "bricks", price: 15, image: "cb.png", description: "High Strength" }
+    ];
+
+    function displayProducts(filteredProducts = products) {
+        const productList = document.getElementById("productList");
+        productList.innerHTML = filteredProducts.map(product => `
+            <div class="product">
+                <img src="${product.image}" alt="${product.name}">
+                <h4>${product.name}</h4>
+                <p>${product.description}</p>
+                <p class="price">₹${product.price}</p>
+                <div class="buttons">
+                    <button class="add-to-cart" onclick="addToCart(${product.id})">Add to Cart</button>
+                    <button class="buy-now" onclick="buyNow(${product.id})">Buy Now</button>
+                </div>
+            </div>
+        `).join("");
+    }
+
+    function addToCart(productId) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        let product = products.find(p => p.id === productId);
+        let existingProduct = cart.find(item => item.id === productId);
+
+        if (existingProduct) {
+            existingProduct.quantity += 1;
+        } else {
+            cart.push({ ...product, quantity: 1 });
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        updateCartCount();
+        alert(`${product.name} added to cart!`);
+    }
+
+    function updateCartCount() {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+        document.getElementById("cartCount").textContent = cart.length;
+    }
+
+    function viewCart() {
+        window.location.href = "cart.html";
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        displayProducts();
+        updateCartCount();
+    });
+</script>
+
+</body>
+</html>

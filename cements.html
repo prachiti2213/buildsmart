@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cement Products</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll(".view-details").forEach(button => {
+                button.addEventListener("click", function() {
+                    let product = this.dataset.product;
+                    document.getElementById("modalTitle").innerText = product;
+                    document.getElementById("modalDescription").innerText = this.dataset.description;
+                    document.getElementById("productModal").style.display = "block";
+                });
+            });
+
+            document.getElementById("closeModal").addEventListener("click", function() {
+                document.getElementById("productModal").style.display = "none";
+            });
+
+            document.querySelectorAll(".add-to-cart").forEach(button => {
+                button.addEventListener("click", function() {
+                    alert("Item added to cart: " + this.dataset.product);
+                });
+            });
+
+            document.querySelectorAll(".buy-now").forEach(button => {
+                button.addEventListener("click", function() {
+                    alert("Proceeding to buy: " + this.dataset.product);
+                });
+            });
+        });
+    </script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background: linear-gradient(135deg, #333, #555);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .container {
+            width: 90%;
+            margin: 40px auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+        .product {
+            border: none;
+            background: white;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 12px;
+        }
+        .product:hover {
+            transform: scale(1.08);
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.3);
+        }
+       .product img {
+       width: 100%;
+       height: 200px; /* Set a fixed height */
+       object-fit: contain; /* Ensures the image fits within the box without distortion */
+       }
+ 
+        .buttons button {
+            padding: 12px;
+            margin: 8px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+        .add-to-cart {
+            background: #28a745;
+            color: white;
+        }
+        .buy-now {
+            background: #007bff;
+            color: white;
+        }
+        .add-to-cart:hover {
+            background: #218838;
+        }
+        .buy-now:hover {
+            background: #0056b3;
+        }
+        /* popup-styles.css */
+     .modal {
+     display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    width: 50%;
+    max-width: 600px;
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.5);
+    position: relative;
+    animation: fadeIn 0.4s ease-in-out
+}
+
+.modal-content h2 {
+    margin-bottom: 15px;
+    font-size: 28px;
+    color: #333;
+}
+
+.modal-content p {
+    font-size: 28px;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.close-modal {
+    background: #d9534f;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 28px;
+    transition: background 0.3s;
+}
+
+.close-modal:hover {
+    background: #b52b27;
+}
+
+/* Smooth fade-in animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+    </style>
+</head>
+<body>
+    <h1>Cement Products</h1>
+    <div class="container">
+        <div class="product">
+            <img src="ultratech_cement.png" alt="UltraTech Cement">
+            <h4>UltraTech Cement</h4>
+            <p>Price: ₹1000</p>
+            <button class="view-details" data-product="UltraTech Cement" data-description="High-quality cement for all construction needs.">View Details</button>
+            <button class="add-to-cart" data-product="UltraTech Cement">Add to Cart</button>
+            <button class="buy-now" data-product="UltraTech Cement">Buy Now</button>
+        </div>
+
+        <div class="product">
+            <img src="acc.png" alt="ACC Cement">
+            <h4>ACC Cement</h4>
+            <p>Price: ₹950</p>
+            <button class="view-details" data-product="ACC Cement" data-description="Premium cement with high durability and strength.">View Details</button>
+            <button class="add-to-cart" data-product="ACC Cement">Add to Cart</button>
+            <button class="buy-now" data-product="ACC Cement">Buy Now</button>
+        </div>
+
+        <div class="product">
+            <img src="ac.png" alt="Ambuja Cement">
+            <h4>Ambuja Cement</h4>
+            <p>Price: ₹920</p>
+            <button class="view-details" data-product="Ambuja Cement" data-description="Eco-friendly and sustainable cement.">View Details</button>
+            <button class="add-to-cart" data-product="Ambuja Cement">Add to Cart</button>
+            <button class="buy-now" data-product="Ambuja Cement">Buy Now</button>
+        </div> 
+            <div class="product">
+            <img src="shree.png" alt="Shree Cement">
+            <h4>Shree Cement</h4>
+            <p>Price: ₹920</p>
+           <button class="view-details" data-product="Shree Cement" data-description="Eco-friendly and sustainable cement.">View Details</button>
+            <button class="add-to-cart" data-product="Shree Cement">Add to Cart</button>
+            <button class="buy-now" data-product="Shree Cement">Buy Now</button>
+        </div>
+        <div class="product">
+            <img src="jk.png" alt="JK Cement">
+            <h4>JK Cement</h4>
+            <p>Price: ₹890</p>
+            <button class="view-details" data-product="JK Cement" data-description="Premium cement with high durability and strength.">View Details</button>
+            <button class="add-to-cart" data-product="JK Cement">Add to Cart</button>
+            <button class="buy-now" data-product="JK Cement">Buy Now</button>
+        </div>
+        </div>
+
+    <div id="productModal" class="modal">
+        <span id="closeModal" class="close-btn">&times;</span>
+        <h2 id="modalTitle"></h2>
+        <p id="modalDescription"></p>
+    </div>
+</body>
+</html>

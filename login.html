@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Build Smart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+        function redirectToSignup(event) {
+            event.preventDefault();
+            window.location.href = "Sign Up.html";
+        }
+
+        function googleLogin() {
+            window.location.href = "https://accounts.google.com/o/oauth2/auth?client_id=337917313584-emfbdjvs0rq1kpecucope0k92jrbmgen.apps.googleusercontent.com&redirect_uri=http://localhost:main1.html&response_type=token&scope=email";
+        }
+
+        function facebookLogin() {
+            window.location.href = "https://www.facebook.com/v12.0/dialog/oauth?client_id=1557987418240463&redirect_uri=http://localhost:8080/dashboard.html&response_type=token&scope=email";
+        }
+
+        function redirectToForgotPassword(event) {
+            event.preventDefault();
+            window.location.href = "forgot-password.html";
+        }
+		
+
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('back.jpeg') no-repeat center center/cover;
+        }
+        .container {
+            width: 300px; /* Reduced size */
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px; /* Reduced padding */
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+        }
+        .form-box {
+            width: 100%;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 20px;
+        }
+        input {
+            width: 100%;
+            padding: 6px;
+            margin: 6px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+        button {
+            width: 100%;
+            padding: 8px;
+            background: #ff7f50;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #ff4500;
+        }
+        .social-btn {
+            display: block;
+            text-align: center;
+            padding: 8px;
+            margin: 6px 0;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: bold;
+            transition: 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .facebook {
+            background: #3b5998;
+            color: white;
+        }
+        .google {
+            background: #db4437;
+            color: white;
+        }
+        .social-btn:hover {
+            opacity: 0.85;
+        }
+        .links {
+            text-align: center;
+            margin-top: 8px;
+        }
+        .links a {
+            text-decoration: none;
+            color: #ff7f50;
+            font-weight: bold;
+            transition: 0.3s;
+            font-size: 13px;
+        }
+        .links a:hover {
+            color: #ff4500;
+        }
+		.radio-group {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 10px 0;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.radio-label input {
+    display: none;
+}
+
+.custom-radio {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ff7f50;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    margin-right: 8px;
+}
+
+.radio-label input:checked + .custom-radio {
+    background-color: #ff7f50;
+    border: 2px solid #ff4500;
+}
+
+.radio-label input:checked + .custom-radio::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+    </style>
+</head>
+<body>
+
+
+
+<div class="container">
+    <div class="form-box">
+        <h2>Welcome Back!</h2>
+		
+        <form action="login.php" method="post">
+            <label>Email</label>
+            <input type="email" name="email" required>
+            
+            <label>Password</label>
+            <input type="password" name="password" required>
+            
+            <input type="checkbox"> Remember Me
+            <a href="#" class="links" onclick="redirectToForgotPassword(event)">Forgot Password?</a>
+			<div class="radio-group">
+    <label class="radio-label">
+        <input type="radio" id="user" name="login_as" value="user" required>
+        <span class="custom-radio"></span> Login as User
+    </label>
+
+    <label class="radio-label">
+        <input type="radio" id="admin" name="login_as" value="admin" required>
+        <span class="custom-radio"></span> Login as Admin
+    </label>
+</div>
+
+            
+            <button type="submit">Login</button>
+            
+            <hr>
+            <button class="social-btn google" onclick="googleLogin()">Login with Google</button>
+            <button class="social-btn facebook" onclick="facebookLogin()">Login with Facebook</button>
+            
+            <div class="links">
+                <p>Don't have an account? <a href="#" onclick="redirectToSignup(event)">Sign Up</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

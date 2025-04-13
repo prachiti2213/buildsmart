@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment - BuildSmart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background: #f3f3f3; padding: 20px; }
+        .container { width: 60%; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0,0,0,0.2); }
+        h2 { text-align: center; color: #0070E0; margin-bottom: 10px; }
+        .timer { color: red; text-align: center; font-size: 14px; margin-bottom: 15px; }
+        .payment-options { padding: 20px; }
+        .option { padding: 12px; margin: 5px 0; border: 1px solid #ddd; border-radius: 5px; display: flex; align-items: center; cursor: pointer; transition: 0.3s; }
+        .option:hover { background: #f8f8f8; }
+        .option input { margin-right: 10px; }
+        .summary { background: #f8f8f8; padding: 15px; border-radius: 5px; margin-top: 20px; }
+        .summary p { display: flex; justify-content: space-between; }
+        .pay-btn { width: 100%; padding: 12px; background: #0070E0; color: white; font-size: 16px; border: none; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+        .pay-btn:hover { background: #005bb5; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Secure Payment</h2>
+        <p class="timer">Complete payment in <span id="countdown">14:59</span></p>
+
+        <div class="payment-options">
+            <label class="option">
+                <input type="radio" name="payment" value="googlepay" checked> 
+                <i class="fab fa-google-pay"></i> Google Pay
+            </label>
+            <label class="option">
+                <input type="radio" name="payment" value="phonepe"> 
+                <i class="fas fa-mobile-alt"></i> PhonePe
+            </label>
+            <label class="option">
+                <input type="radio" name="payment" value="upi"> 
+                <i class="fas fa-qrcode"></i> Pay by UPI ID
+            </label>
+            <label class="option">
+                <input type="radio" name="payment" value="card"> 
+                <i class="fas fa-credit-card"></i> Credit / Debit Card
+            </label>
+            <label class="option">
+                <input type="radio" name="payment" value="netbanking"> 
+                <i class="fas fa-university"></i> Net Banking
+            </label>
+        </div>
+
+        <div class="summary">
+            <p><strong>Price (items):</strong> ₹<span id="cart-total">0</span></p>
+            <p><strong>Delivery Charges:</strong> <span style="color: green;">FREE</span></p>
+            <p><strong>Platform Fee:</strong> ₹3</p>
+            <hr>
+            <p><strong>Total Payable:</strong> <strong>₹<span id="final-total">0</span></strong></p>
+        </div>
+
+        <button class="pay-btn" onclick="proceedPayment()">Proceed to Pay</button>
+  
+
+    </div>
+
+    <script>
+	
+        // Fetch cart details from localStorage
+        let cart = JSON.parse(localStorage.getItem("checkoutCart")) || [];
+        let cartTotal = 0;
+
+        // Calculate total cart value dynamically
+        if (cart.length > 0) {
+            cart.forEach(item => {
+                cartTotal += item.price * item.quantity;
+            });
+        }
+
+        // Add platform fee of ₹3
+        let finalTotal = cartTotal + 3;
+
+        // Update UI
+        document.getElementById("cart-total").innerText = cartTotal;
+        document.getElementById("final-total").innerText = finalTotal;
+
+        function proceedPayment() {
+            let selectedPayment = document.querySelector('input[name="payment"]:checked').value;
+            
+            if (cart.length === 0) {
+                alert("Your cart is empty! Add items before proceeding to payment.");
+                return;
+            }
+
+
+            if (selectedPayment === "googlepay") {
+                window.location.href = `upi://pay?pa=yourmerchant@upi&pn=BuildSmart&am=${finalTotal}&cu=INR`;
+            } else if (selectedPayment === "phonepe") {
+                window.location.href = `phonepe://pay?pa=yourmerchant@upi&pn=BuildSmart&am=${finalTotal}&cu=INR`;
+            } else if (selectedPayment === "upi") {
+                let upiId = prompt("Enter your UPI ID:");
+                if (upiId) {
+                    window.location.href = `upi://pay?pa=${upiId}&pn=BuildSmart&am=${finalTotal}&cu=INR`;
+                }
+            } else if (selectedPayment === "card") {
+                payWithRazorpay(finalTotal);
+            } else if (selectedPayment === "netbanking") {
+                alert("Redirecting to Net Banking...");
+                window.location.href = `https://yourbank.com/netbanking?amount=${finalTotal}`;
+            }
+        }
+     
+        function payWithRazorpay(amount) {
+            var options = {
+                key: "rzp_test_YR0GOUqQTAKyOH",
+                amount: amount * 100,
+                currency: "INR",
+                name: "BuildSmart",
+                description: "Purchase Payment",
+                handler: function(response) {
+                    window.location.href = `store_payment.php?payment_id=${response.razorpay_payment_id}&amount=${amount}`;
+                }
+            };
+            var rzp = new Razorpay(options);
+            rzp.open();
+        }
+		// Set countdown time (15 minutes)
+let timeLeft = 15 * 60; // 15 minutes in seconds
+
+// Function to update the countdown timer
+function updateCountdown() {
+    let minutes = Math.floor(timeLeft / 60);
+    let seconds = timeLeft % 60;
+    
+    // Format time to always show two digits
+    document.getElementById("countdown").innerText = 
+        `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+    // If time runs out, disable the payment button
+    if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        document.querySelector(".pay-btn").disabled = true;
+        document.querySelector(".pay-btn").style.background = "#ccc";
+        alert("Time expired! Please refresh the page to start over.");
+    } else {
+        timeLeft--;
+    }
+}
+
+// Start the countdown and update every second
+let timerInterval = setInterval(updateCountdown, 1000);
+
+document.addEventListener("DOMContentLoaded", function() {
+    let cartItems = JSON.parse(localStorage.getItem("checkoutCart")) || [];
+    let cartTotal = parseFloat(localStorage.getItem("cart_total")) || 0;
+    
+    const cartList = document.getElementById("cartItems");
+    const cartTotalElem = document.getElementById("cart-total");
+    const finalTotalElem = document.getElementById("final-total");
+
+    if (cartItems.length > 0) {
+        cartList.innerHTML = cartItems.map(item => `
+            <div class="cart-item">
+                <img src="${item.image}" alt="${item.name}" style="width:80px;">
+                <h4>${item.name}</h4>
+                <p>₹${item.price}</p>
+            </div>
+        `).join("");
+
+        cartTotalElem.innerText = cartTotal;
+        finalTotalElem.innerText = cartTotal + 3; // Including platform fee
+    } else {
+        cartList.innerHTML = "<p class='empty-cart'>🛒 No item selected.</p>";
+        cartTotalElem.innerText = "0";
+        finalTotalElem.innerText = "0";
+    }
+});
+
+    </script>
+
+</body>
+</html>
